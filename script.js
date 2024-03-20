@@ -22,3 +22,22 @@ resetButton.addEventListener('click', function () {
 function updateCountDisplay() {
     countDisplay.textContent = count;
 }
+
+
+function fetchQuote() {
+    fetch('https://api.quotable.io/random')
+        .then(response => response.json())
+        .then(data => {
+            const quote = data.content;
+            const author = data.author;
+            const quoteContainer = document.getElementById('new-quote-container');
+            quoteContainer.innerHTML = `<p>"${quote}"</p><p>- ${author}</p>`;
+        })
+        .catch(error => {
+            console.error('Error fetching quote:', error);
+            const quoteContainer = document.getElementById('new-quote-container');
+            quoteContainer.innerHTML = '<p>Failed to fetch quote. Please try again later.</p>';
+        });
+}
+
+document.addEventListener('DOMContentLoaded', fetchQuote);
